@@ -368,9 +368,9 @@ keyboardMapping.update(
         "volumedown": pydotool.KEY_VOLUMEDOWN,
         "volumemute": pydotool.KEY_MUTE,
         "volumeup": pydotool.KEY_VOLUMEUP,
-        "win": None,
-        "winleft": None,
-        "winright": None,
+        "win": pydotool.KEY_LEFTMETA,
+        "winleft": pydotool.KEY_LEFTMETA,
+        "winright": pydotool.KEY_RIGHTMETA,
     }
 )
 
