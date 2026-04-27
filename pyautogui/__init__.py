@@ -1033,6 +1033,10 @@ def click(
             failSafeCheck()
             if button in (LEFT, MIDDLE, RIGHT):
                 platformModule._multiClick(x, y, button, 1, interval)
+    elif system_platform == 'wayland':
+        failSafeCheck()
+        if button in (LEFT, MIDDLE, RIGHT):
+            platformModule._click(x, y, button, clicks)
     else:
         for i in range(clicks):
             failSafeCheck()

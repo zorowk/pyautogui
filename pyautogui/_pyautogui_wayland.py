@@ -119,13 +119,16 @@ def _scroll(clicks, x=None, y=None):
     return _vscroll(clicks, x, y)
 
 
-def __click(code:int):
+def __click(code:int, repeat:int=1):
     code = hex(code)
     time.sleep(pyautogui.WAYLAND_CLICK_TIME)
-    subprocess.run(["ydotool", "click", code])
+    cmd = ["ydotool", "click", code]
+    if repeat > 1:
+        cmd.extend(["--repeat", str(repeat)])
+    subprocess.run(cmd)
     time.sleep(pyautogui.WAYLAND_CLICK_TIME)
 
-def _click(x, y, button):
+def _click(x, y, button, clicks=1):
     assert button in (
         LEFT,
         MIDDLE,
@@ -134,11 +137,11 @@ def _click(x, y, button):
 
     _moveTo(x, y)
     if button == LEFT:
-        __click(ClickEnum.LEFT | ClickEnum.LEFT_CLICK)
+        __click(ClickEnum.LEFT | ClickEnum.LEFT_CLICK, repeat=clicks)
     if button == MIDDLE:
-        __click(ClickEnum.MIDDLE | ClickEnum.MOUSE_CLICK)
+        __click(ClickEnum.MIDDLE | ClickEnum.MOUSE_CLICK, repeat=clicks)
     if button == RIGHT:
-        __click(ClickEnum.RIGHT | ClickEnum.LEFT_CLICK)
+        __click(ClickEnum.RIGHT | ClickEnum.LEFT_CLICK, repeat=clicks)
 
 
 def _mouse_is_swapped():
