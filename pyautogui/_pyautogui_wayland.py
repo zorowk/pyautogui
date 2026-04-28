@@ -16,6 +16,18 @@ from pydotool import ClickEnum
 from PIL import Image
 import time
 
+DEFAULT_WAYLAND_MOVE_TIME = 0.025
+DEFAULT_WAYLAND_CLICK_TIME = 0.25
+
+
+def _get_wayland_move_time():
+    return getattr(pyautogui, "WAYLAND_MOVE_TIME", DEFAULT_WAYLAND_MOVE_TIME)
+
+
+def _get_wayland_click_time():
+    return getattr(pyautogui, "WAYLAND_CLICK_TIME", DEFAULT_WAYLAND_CLICK_TIME)
+
+
 SCALING = 1
 SIZE = None
 _display = None
@@ -79,7 +91,7 @@ def _moveTo(x, y):
         new_x += _display["x"]
         new_y += _display["y"]
     subprocess.run(["ydotool", "mousemove", "-a", "-x", str(new_x), "-y", str(new_y)])
-    time.sleep(pyautogui.WAYLAND_MOVE_TIME)
+    time.sleep(_get_wayland_move_time())
 
 if "Getting constant values" and not ISGNOME:
     init_x, init_y = _position()
@@ -121,12 +133,12 @@ def _scroll(clicks, x=None, y=None):
 
 def __click(code:int, repeat:int=1):
     code = hex(code)
-    time.sleep(pyautogui.WAYLAND_CLICK_TIME)
+    time.sleep(_get_wayland_click_time())
     cmd = ["ydotool", "click", code]
     if repeat > 1:
         cmd.extend(["--repeat", str(repeat)])
     subprocess.run(cmd)
-    time.sleep(pyautogui.WAYLAND_CLICK_TIME)
+    time.sleep(_get_wayland_click_time())
 
 def _click(x, y, button, clicks=1):
     assert button in (
