@@ -12,3 +12,6 @@ dependencies = [
     "pytweening>=1.2.0",
     "wayland-automation>=0.2.1; platform_system == \"Linux\"",
 ]
+
+[tool.uv.sources]
+wayland-automation = { git = "https://github.com/zorowk/wayland-automation.git", branch="main" }
