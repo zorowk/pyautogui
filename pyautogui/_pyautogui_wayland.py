@@ -32,6 +32,7 @@ SCALING = 1
 SIZE = None
 _display = None
 ISGNOME = os.getenv("XDG_CURRENT_DESKTOP") == "ubuntu:GNOME"
+ISTREELAND = "treeland" in os.getenv("XDG_CURRENT_DESKTOP", "").lower() or "treeland" in os.getenv("WAYLAND_DISPLAY", "").lower()
 if ISGNOME:
     try:
         import gnomopo
@@ -93,10 +94,10 @@ def _moveTo(x, y):
     subprocess.run(["ydotool", "mousemove", "-a", "-x", str(new_x), "-y", str(new_y)])
     time.sleep(_get_wayland_move_time())
 
-if "Getting constant values" and not ISGNOME:
+if "Getting constant values" and not ISGNOME and not ISTREELAND:
     init_x, init_y = _position()
     w, h = _size()
-    
+
     _moveTo(w, h)
     x, y = _position()
     _moveTo(init_x, init_y)
